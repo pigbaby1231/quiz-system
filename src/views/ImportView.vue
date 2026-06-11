@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { useBanksStore } from '../stores/banks'
 import { parseFile } from '../parsers'
 import { downloadTemplate } from '../parsers/sheet'
+import { downloadTemplate as downloadJsonTemplate } from '../parsers/json'
 import { indicesToLetters } from '../parsers/validate'
 
 const router = useRouter()
@@ -94,6 +95,7 @@ const canImport = computed(() => {
     <p class="muted">支援 .xlsx / .csv（UTF-8）/ .json</p>
     <p>
       <button class="btn" @click="downloadTemplate">下載 Excel 範本</button>
+      <button class="btn" @click="downloadJsonTemplate">下載 JSON 範本</button>
       <button class="btn" @click="showHelp = !showHelp">格式說明</button>
     </p>
   </div>

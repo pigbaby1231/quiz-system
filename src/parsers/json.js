@@ -1,3 +1,41 @@
+export function downloadTemplate() {
+  const sample = {
+    name: '題庫範本',
+    questions: [
+      {
+        question: '範例單選題：1 + 1 = ?',
+        options: ['1', '2', '3', '4'],
+        answer: [1],
+        explanation: '基本加法',
+        tags: ['數學']
+      },
+      {
+        question: '範例多選題：下列哪些是質數？',
+        options: ['2', '3', '4', '5', '6'],
+        answer: [0, 1, 3],
+        explanation: '質數只能被 1 和自己整除',
+        tags: ['數學', '質數']
+      },
+      {
+        question: '範例固定選項題：下列敘述何者正確？',
+        options: ['地球繞太陽', '太陽繞地球', '以上皆非'],
+        answer: 'A',
+        explanation: 'answer 也可以用字母寫法',
+        tags: ['常識'],
+        fixedOrder: true
+      }
+    ]
+  }
+  const blob = new Blob([JSON.stringify(sample, null, 2)], {
+    type: 'application/json'
+  })
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(blob)
+  a.download = '題庫範本.json'
+  a.click()
+  URL.revokeObjectURL(a.href)
+}
+
 export function parseJson(text, fileName) {
   let data
   try {
