@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useBanksStore } from '../stores/banks'
-import { parseFile } from '../parsers'
+import { parseFile, parseText } from '../parsers'
 import { downloadTemplate } from '../parsers/sheet'
 import { downloadTemplate as downloadJsonTemplate } from '../parsers/json'
 import { indicesToLetters } from '../parsers/validate'
@@ -35,16 +35,31 @@ const summary = computed(() => {
   }
 })
 
+function applyParsed(parsed) {
+  result.value = parsed
+  newName.value = parsed.name
+  mode.value = 'new'
+  if (banks.banks.length) targetId.value = banks.banks[0].id
+}
+
 async function handleFile(file) {
   parseError.value = ''
   result.value = null
   if (!file) return
   try {
-    const parsed = await parseFile(file)
-    result.value = parsed
-    newName.value = parsed.name
-    mode.value = 'new'
-    if (banks.banks.length) targetId.value = banks.banks[0].id
+    applyParsed(await parseFile(file))
+  } catch (e) {
+    parseError.value = e.message
+  }
+}
+
+const pasteText = ref('')
+
+function handlePaste() {
+  parseError.value = ''
+  result.value = null
+  try {
+    applyParsed(parseText(pasteText.value))
   } catch (e) {
     parseError.value = e.message
   }
@@ -99,6 +114,18 @@ const canImport = computed(() => {
       <button class="btn" @click="showHelp = !showHelp">格式說明</button>
     </p>
   </div>
+
+  <details class="card paste-area">
+    <summary>或直接貼上 JSON / CSV 內容</summary>
+    <textarea
+      v-model="pasteText"
+      rows="10"
+      placeholder='{"name": "題庫名稱", "questions": [...]}&#10;&#10;或 CSV（第一行為標題列）：&#10;題目,A,B,C,D,答案,解析,標籤'
+    ></textarea>
+    <button class="btn btn-primary" :disabled="!pasteText.trim()" @click="handlePaste">
+      解析貼上的內容
+    </button>
+  </details>
 
   <div v-if="showHelp" class="card help">
     <h2>Excel / CSV 格式</h2>
@@ -194,6 +221,21 @@ const canImport = computed(() => {
 .dropzone.dragging {
   border-color: #2563eb;
   background: #eff6ff;
+}
+.paste-area summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.paste-area textarea {
+  display: block;
+  width: 100%;
+  margin: 0.8rem 0;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0.6rem;
+  font-size: 0.9rem;
+  font-family: Consolas, monospace;
+  resize: vertical;
 }
 .error-box {
   border-color: #fca5a5;
