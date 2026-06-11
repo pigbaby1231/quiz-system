@@ -127,16 +127,21 @@ const canImport = computed(() => {
     </button>
   </details>
 
-  <div v-if="showHelp" class="card help">
-    <h2>Excel / CSV 格式</h2>
-    <p>第一行為標題：<code>題目、A、B、C、D、E、F、答案、解析、標籤、選項固定</code>，一行一題。</p>
-    <ul>
-      <li>選項至少 A、B 兩欄，留空表示該題沒有此選項（2~6 個選項）</li>
-      <li>答案填字母，如 <code>B</code> 或 <code>AC</code>（一個字母＝單選，多個＝多選）</li>
-      <li>標籤多個用逗號分隔；「選項固定」填「是」代表該題選項不隨機打亂</li>
-      <li>含「以上皆是 / 以上皆非」的題目會自動不打亂選項</li>
-    </ul>
-    <h2>JSON 格式</h2>
+  <div v-if="showHelp" class="modal-overlay" @click.self="showHelp = false">
+    <div class="modal card help">
+      <div class="modal-head">
+        <h2>題庫格式說明</h2>
+        <button class="modal-close" @click="showHelp = false">✕</button>
+      </div>
+      <h3>Excel / CSV 格式</h3>
+      <p>第一行為標題：<code>題目、A、B、C、D、E、F、答案、解析、標籤、選項固定</code>，一行一題。</p>
+      <ul>
+        <li>選項至少 A、B 兩欄，留空表示該題沒有此選項（2~6 個選項）</li>
+        <li>答案填字母，如 <code>B</code> 或 <code>AC</code>（一個字母＝單選，多個＝多選）</li>
+        <li>標籤多個用逗號分隔；「選項固定」填「是」代表該題選項不隨機打亂</li>
+        <li>含「以上皆是 / 以上皆非」的題目會自動不打亂選項</li>
+      </ul>
+      <h3>JSON 格式</h3>
     <pre>{
   "name": "題庫名稱",
   "questions": [
@@ -150,7 +155,8 @@ const canImport = computed(() => {
     }
   ]
 }</pre>
-    <p class="muted">answer 用選項索引（0 起算），也接受 "AC" 字母寫法。</p>
+      <p class="muted">answer 用選項索引（0 起算），也接受 "AC" 字母寫法。</p>
+    </div>
   </div>
 
   <div v-if="parseError" class="card error-box">⚠️ {{ parseError }}</div>
@@ -221,6 +227,42 @@ const canImport = computed(() => {
 .dropzone.dragging {
   border-color: #2563eb;
   background: #eff6ff;
+}
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 100;
+}
+.modal {
+  max-width: 640px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  margin: 0;
+}
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-head h2 {
+  margin: 0;
+}
+.modal-close {
+  border: none;
+  background: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 0.2rem 0.5rem;
+}
+.modal-close:hover {
+  color: #111827;
 }
 .paste-area summary {
   cursor: pointer;
