@@ -1,0 +1,60 @@
+{
+  "name": "範例題庫",
+  "questions": [
+    {
+      "question": "1 + 1 = ?",
+      "options": ["1", "2", "3", "4"],
+      "answer": [1],
+      "explanation": "基本加法。",
+      "tags": ["數學"]
+    },
+    {
+      "question": "下列哪些是質數？",
+      "options": ["2", "3", "4", "5", "6"],
+      "answer": [0, 1, 3],
+      "explanation": "質數只能被 1 和自己整除；4 = 2×2、6 = 2×3 不是質數。",
+      "tags": ["數學", "質數"]
+    },
+    {
+      "question": "地球繞太陽一圈大約需要多久？",
+      "options": ["一天", "一個月", "一年"],
+      "answer": "C",
+      "explanation": "公轉週期約 365.25 天。",
+      "tags": ["自然"]
+    },
+    {
+      "question": "下列敘述何者正確？",
+      "options": ["太陽從西邊升起", "月亮自己會發光", "以上皆非"],
+      "answer": [2],
+      "explanation": "太陽從東邊升起；月亮反射太陽光。",
+      "tags": ["自然"]
+    },
+    {
+      "question": "HTTP 狀態碼 404 代表什麼？",
+      "options": ["伺服器錯誤", "找不到資源", "未授權", "請求成功"],
+      "answer": [1],
+      "explanation": "404 Not Found：伺服器找不到請求的資源。",
+      "tags": ["網路"]
+    },
+    {
+      "question": "下列哪些是 JavaScript 的原始型別（primitive）？",
+      "options": ["string", "number", "array", "object", "boolean", "function"],
+      "answer": [0, 1, 4],
+      "explanation": "array、object、function 都是物件型別。",
+      "tags": ["程式"]
+    },
+    {
+      "question": "二進位 1010 等於十進位多少？",
+      "options": ["8", "10", "12"],
+      "answer": [1],
+      "explanation": "8 + 2 = 10。",
+      "tags": ["程式", "數學"]
+    },
+    {
+      "question": "下列何者是台灣最高峰？",
+      "options": ["雪山", "玉山", "合歡山", "阿里山"],
+      "answer": [1],
+      "explanation": "玉山主峰海拔 3952 公尺。"
+    }
+  ]
+}
